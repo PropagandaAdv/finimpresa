@@ -639,6 +639,111 @@ function Audience() {
   );
 }
 
+/* ── Il territorio: foto di Modena (Wikimedia Commons, crediti nel footer) ── */
+const PHOTOS = [
+  {
+    src: '/modena/piazza-grande.webp',
+    alt: 'Il Duomo di Modena con la torre Ghirlandina, visti da Piazza Grande sotto un cielo azzurro',
+    caption: 'Duomo e Ghirlandina',
+    className: 'lg:row-span-2 aspect-[4/5] lg:aspect-auto',
+    position: 'object-[70%_50%]',
+  },
+  {
+    src: '/modena/palazzo-ducale.webp',
+    alt: 'La facciata del Palazzo Ducale di Modena affacciata sulla piazza',
+    caption: 'Palazzo Ducale',
+    className: 'aspect-[4/3] lg:aspect-auto',
+    position: 'object-center',
+  },
+  {
+    src: '/modena/portici.webp',
+    alt: 'I portici del centro di Modena con le colonne e i passanti',
+    caption: 'I portici del centro',
+    className: 'aspect-[4/3] lg:aspect-auto',
+    position: 'object-center',
+  },
+];
+
+function Territory() {
+  const chips = [
+    { icon: MapPin, label: 'Sede a Modena, in Via Malavolti 27' },
+    { icon: Building2, label: 'In collaborazione con CNA Modena' },
+    { icon: Handshake, label: 'Assistenza diretta sul territorio' },
+  ];
+  return (
+    <section id="territorio" className="scroll-mt-24 bg-white pb-20 text-[#102936] lg:pb-32">
+      <div className="mx-auto max-w-7xl px-6 sm:px-8">
+        <div className="grid gap-10 lg:grid-cols-12 lg:items-end lg:gap-16">
+          <div className="lg:col-span-7">
+            <Reveal>
+              <Eyebrow>Il territorio</Eyebrow>
+            </Reveal>
+            <Reveal delay={80}>
+              <h2 className="mt-5 text-4xl font-bold leading-[1.1] tracking-tight sm:text-5xl">
+                Radicati a Modena, accanto alle imprese che la fanno crescere.
+              </h2>
+            </Reveal>
+          </div>
+          <Reveal delay={160} className="lg:col-span-5">
+            <p className="max-w-xl text-base font-light leading-relaxed text-[#102936]/80 lg:text-lg">
+              Finimpresa lavora a Modena e per Modena: assistenza diretta sul territorio, al fianco di CNA Modena, per
+              accompagnare le imprese locali nei loro progetti di investimento.
+            </p>
+          </Reveal>
+        </div>
+
+        <div className="mt-14 grid gap-4 sm:gap-6 lg:h-[640px] lg:grid-cols-12 lg:grid-rows-2">
+          {PHOTOS.map((p, i) => (
+            <Reveal
+              key={p.src}
+              delay={i * 120}
+              className={`${i === 0 ? 'lg:col-span-7' : 'lg:col-span-5'} ${i === 0 ? 'lg:row-span-2' : ''} h-full min-h-0`}
+            >
+              <figure
+                className={`group relative h-full w-full overflow-hidden rounded-2xl bg-[#102936] shadow-[0_30px_80px_-30px_rgba(16,41,54,0.45)] ${p.className}`}
+              >
+                <img
+                  src={p.src}
+                  alt={p.alt}
+                  width="1800"
+                  height="1350"
+                  loading="lazy"
+                  decoding="async"
+                  className={`h-full w-full object-cover ${p.position} transition-transform duration-[1200ms] ease-out group-hover:scale-105`}
+                />
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#102936]/85 to-transparent"
+                />
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -left-6 top-8 h-3 w-40 -rotate-[32deg] rounded-full bg-gradient-to-r from-[#FFE400] to-[#FFBF00]"
+                />
+                <figcaption className="absolute bottom-5 left-6 flex items-center gap-2 text-base font-semibold text-white">
+                  <MapPin size={20} strokeWidth={1.5} className="text-[#FFE400]" aria-hidden="true" />
+                  {p.caption}, Modena
+                </figcaption>
+              </figure>
+            </Reveal>
+          ))}
+        </div>
+
+        <ul className="mt-8 grid gap-3 sm:grid-cols-3">
+          {chips.map((c) => (
+            <li
+              key={c.label}
+              className="flex items-center gap-3 rounded-2xl border border-[#102936]/10 bg-white px-5 py-4 text-base font-semibold shadow-[0_20px_50px_-30px_rgba(16,41,54,0.3)]"
+            >
+              <c.icon size={20} strokeWidth={1.5} className="shrink-0 text-[#1D4E67]" aria-hidden="true" />
+              {c.label}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
 /* ── Modulo di contatto ────────────────────────────────────────────────── */
 const EMPTY = { nome: '', azienda: '', email: '', telefono: '', area: '', messaggio: '', consenso: false, website: '' };
 
@@ -1041,7 +1146,16 @@ function Footer() {
       </div>
 
       <div className="mx-auto mt-14 flex max-w-7xl flex-col gap-4 border-t border-white/10 px-6 pt-8 text-sm font-light text-white/70 sm:flex-row sm:items-center sm:justify-between sm:px-8">
-        <p>© {year} Finimpresa. Tutti i diritti riservati.</p>
+        <div className="space-y-2">
+          <p>© {year} Finimpresa. Tutti i diritti riservati.</p>
+          <p className="max-w-3xl text-xs leading-relaxed">
+            Foto di Modena da Wikimedia Commons: Duomo e Piazza Grande di Gerolamondo (
+            <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.it" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-[#FFE400]">CC BY-SA 4.0</a>
+            ), Palazzo Ducale di Palickap (
+            <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.it" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-[#FFE400]">CC BY-SA 4.0</a>
+            ), portici di Icco80 (pubblico dominio). Le immagini sono state ridimensionate.
+          </p>
+        </div>
         <ul className="flex gap-6">
           <li>
             <a href={PRIVACY_HREF} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 transition-colors hover:text-[#FFE400]">
@@ -1104,6 +1218,7 @@ export default function FinimpresaHome() {
           <Slant fill="#102936" />
         </div>
         <Audience />
+        <Territory />
         <Contact />
       </main>
       <div className="bg-white">
